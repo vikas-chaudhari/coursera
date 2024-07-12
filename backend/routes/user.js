@@ -42,10 +42,11 @@ router.post("/login", async (req, resp) => {
   const data = await userModel.findOne({
     email: user.email,
   });
-
+  console.log("user : ", user);
+  console.log("data : ", data);
   if (data) {
-    const newHashedPassword = getHashPassword(data.salt, user.password);
-    console.log("new  : ", newHashedPassword);
+    const newHashedPassword = getHashPassword(user.password, data.salt);
+    console.log("hashedPass  : ", newHashedPassword);
     console.log("DBpass  : ", data.password);
     if (newHashedPassword === data.password) {
       console.log(true);
@@ -60,5 +61,7 @@ router.post("/login", async (req, resp) => {
     // throw new Error("Bad credentials");
   }
 });
+
+
 
 module.exports = router;

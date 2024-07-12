@@ -1,21 +1,22 @@
 const crypto = require("crypto");
 
-const getHashPassword = (salt, password) => {
+const getHashPassword = (password, salt) => {
+  console.log(typeof salt);
   const hashedPassword = crypto
     .createHmac("sha256", salt)
     .update(password)
     .digest("hex");
-  console.log("hashed pass form getHashPassword  : ", hashedPassword);
   return hashedPassword;
 };
 
 const setHashPassword = (password) => {
-  const salt = crypto.randomBytes(16);
+  const salt = crypto.randomBytes(16).toString("hex");
+  console.log(typeof salt);
+
   const hashedPassword = crypto
     .createHmac("sha256", salt)
     .update(password)
     .digest("hex");
-  console.log("hashed pass form setHashPassword  : ", hashedPassword);
   return { salt, hashedPassword };
 };
 
